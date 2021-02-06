@@ -31,6 +31,7 @@ _Menciona las herramientas que utilizaste para crear tu proyecto_
 * Visual Studio Code (IDE)
 * Node.js
 * Vue
+* Vuex
 * Vuetify
 * Sass
 
