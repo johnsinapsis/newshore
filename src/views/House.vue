@@ -10,7 +10,7 @@
         <v-col
             cols="12"
         >
-            <Character :characters="characters"></Character>
+            <Character :house="house"></Character>
         </v-col>
     </v-row>
     
@@ -72,9 +72,7 @@ export default {
         }
     },
     mounted: function(){
-        this.$nextTick(function () {
-            this.loadData(this.house)
-        })
+        
     }
 }
 </script>

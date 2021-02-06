@@ -171,10 +171,9 @@ import { push } from '../../../../../laragon/www/ferro/jsm/utils/TypedArrayUtils
   </v-container>
 </template>
 <script>
+  import axios from 'axios'
   export default {
-    props:{
-        characters: Array
-    },
+    props:['house'],
     data () {
       return {
         itemsPerPageArray: [4, 8, 12],
@@ -194,17 +193,28 @@ import { push } from '../../../../../laragon/www/ferro/jsm/utils/TypedArrayUtils
           'EyeColour',
           'HairColour',
         ],
-        items: [],
+        items:[]
       }
     },
     watch:{
-        characters:function(val){
+        /* characters:function(val){
             this.updateItems()
+        } */
+        house:function(val){
+          this.loadCharacters()
         }
     },
     computed: {
+      characters(){
+        this.updateItems(this.$store.state.characters)
+      },
+      /* items(){
+        return this.$store.state.items
+      }, */
       numberOfPages () {
-        return Math.ceil(this.items.length / this.itemsPerPage)
+        const items = this.items
+        console.log(items)
+        return Math.ceil(items.length / this.itemsPerPage)
       },
       filteredKeys () {
         return this.keys.filter(key => key !== 'Name')
@@ -222,7 +232,7 @@ import { push } from '../../../../../laragon/www/ferro/jsm/utils/TypedArrayUtils
       },
         updateItems: function(){
             this.items = []
-            this.characters.forEach(element => {
+            this.$store.state.characters.forEach(element => {
                 var row = {
                     name: element.name,
                     lastname: this.getLastname(element.name),
@@ -236,6 +246,7 @@ import { push } from '../../../../../laragon/www/ferro/jsm/utils/TypedArrayUtils
                 }
                 this.items.push(row)
             });
+            
         },
         getLastname: function(name){
             return name.split(" ")[1]
@@ -243,11 +254,27 @@ import { push } from '../../../../../laragon/www/ferro/jsm/utils/TypedArrayUtils
         getImage(name){
             var index = this.items.findIndex((e)=>e.name===name)
             return index!==-1 ? this.items[index].img : ''
+        },
+        loadCharacters(){
+          if(this.house==="Houseless"){
+            this.$store.commit('updateCharacters')
+            this.updateItems()
+          }
+          else{
+            axios.get("http://hp-api.herokuapp.com/api/characters/house/"+this.house)
+              .then((response) =>{
+                this.$store.commit('setCharacters',response.data)
+                this.updateItems()
+              })
+              .catch((error) => console.error(error))
+          }
         }
     },
-    mounted: function(){
-       
-        this.updateItems()
-    }
+    created: function(){
+      this.loadCharacters()
+    },
+    /* mounted: function(){
+      this.updateItems()
+    } */
   }
 </script>

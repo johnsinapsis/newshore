@@ -33,12 +33,24 @@
   </v-card>
 </template>
 <script>
+  import axios from 'axios'
   export default {
-    props:{
-      houses: Array
-    },
+    
     data: () => ({
       selectedItem: 1,
     }),
+    created(){
+      axios.get("http://hp-api.herokuapp.com/api/characters")
+      .then((response) =>{
+          //this.getHouses(response.data)
+          this.$store.commit('setHouses',response.data)
+        })
+        .catch((error) => console.error(error))
+    },
+    computed:{
+      houses(){
+        return this.$store.state.houses
+      }
+    }
   }
 </script>

@@ -27,7 +27,7 @@
               cols="12"
               md="3"
             > 
-              <HouseList :houses="houses"></HouseList>
+              <HouseList></HouseList>
             </v-col>
             <v-col
               xs="6" 
@@ -56,33 +56,12 @@ export default {
     return {
       msg: 'Magician School Education',
       logo,
-      houses:[],
     }
   },
   components:{
     HouseList
-  },
-  methods:{
-    getDataApi: function(){
-      axios.get("http://hp-api.herokuapp.com/api/characters")
-        .then((response) =>{
-          //console.log(response.data)
-          this.getHouses(response.data)
-        })
-        .catch((error) => console.error(error))
-    },
-    getHouses: function(data){
-      var index;
-      data.forEach(element => {
-        index = this.houses.findIndex((e) => e === element.house)
-        if(index===-1)
-          this.houses.push(element.house)
-      });
-    }
-  },
-  mounted: function(){
-    this.getDataApi()
   }
+  
 }
 </script>
 
