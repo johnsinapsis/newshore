@@ -8,7 +8,7 @@ export default new Vuex.Store({
         houses:[],
         characters:[],
         houseless:[],
-        items:[]
+        
     },
     mutations:{
         setHouses(state,data){
@@ -25,22 +25,7 @@ export default new Vuex.Store({
         updateCharacters(state){
             state.characters = state.houseless
         },
-        setItems(state){
-            state.characters.forEach(element => {
-                var row = {
-                    name: element.name,
-                    lastname: this.getLastname(element.name),
-                    species: element.species,
-                    gender:  element.gender,
-                    dateOfBirth: element.dateOfBirth,
-                    ancestry: element.ancestry,
-                    eyeColour: element.eyeColour,
-                    hairColour: element.hairColour,
-                    img: element.image,
-                }
-                state.items.push(row)
-            });
-        }
+        
         
     },
     actions:{},

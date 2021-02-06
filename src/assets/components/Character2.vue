@@ -197,20 +197,13 @@ import { push } from '../../../../../laragon/www/ferro/jsm/utils/TypedArrayUtils
       }
     },
     watch:{
-        /* characters:function(val){
-            this.updateItems()
-        } */
+        
         house:function(val){
           this.loadCharacters()
         }
     },
     computed: {
-      characters(){
-        this.updateItems(this.$store.state.characters)
-      },
-      /* items(){
-        return this.$store.state.items
-      }, */
+      
       numberOfPages () {
         const items = this.items
         console.log(items)
