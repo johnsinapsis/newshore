@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -63,6 +64,27 @@ export default new Vuex.Store({
         }
         
     },
-    actions:{},
+    actions:{
+        getHousesAndHouseLess({commit}){
+            axios.get("http://hp-api.herokuapp.com/api/characters")
+                .then((response) =>{
+                    commit('setHouses',response.data)
+                })
+                .catch((error) => console.error(error))
+        },
+        getCharacters({commit},house){
+            return new Promise((resolve)=>{
+                console.log(house)
+                axios.get("http://hp-api.herokuapp.com/api/characters/house/"+house)
+                .then((response) =>{
+                        commit('setCharacters',response.data)
+                        resolve()
+                    })
+                    .catch((error) => console.error(error))
+
+            })
+                //this.updateItems()
+        }
+    },
     modules:{}
 })

@@ -16,7 +16,6 @@
     
 </template>
 <script>
-import axios from 'axios'
 import Character from '../assets/components/Character2'
 export default {
     props: ['house'],

@@ -114,12 +114,10 @@
             this.updateItems()
           }
           else{
-            axios.get("http://hp-api.herokuapp.com/api/characters/house/"+this.house)
-              .then((response) =>{
-                this.$store.commit('setCharacters',response.data)
+            this.$store.dispatch('getCharacters',this.house)
+              .then(()=>{
                 this.updateItems()
               })
-              .catch((error) => console.error(error))
           }
         }
     },
